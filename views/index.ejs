@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Buffer</title>
+  </head>
+  <body>
+    <main>
+      <form action="/" method="POST" enctype="multipart/form-data">
+        <input type="file" name="images" multiple="multiple" />
+        <input type="text" name="text" placeholder="text" />
+        <textarea
+          name="ingridient"
+          cols="30"
+          rows="10"
+          placeholder="ingridient"
+        ></textarea>
+        <textarea
+          name="prescribe"
+          cols="30"
+          rows="10"
+          placeholder="prescribe"
+        ></textarea>
+        <button>Send</button>
+      </form>
+    </main>
+    <section>
+      <% files.forEach(function(file){ %>
+      <h1><%= file.text %></h1>
+      <p><%= file.ingridient %></p>
+      <p><%= file.prescribe %></p>
+      <!-- <img src="<%= file.images %>" alt="" /> -->
+      <%})%>
+    </section>
+
+    <section>
+      <% images.forEach(function(file){ %>
+      <img src="<%= file %>" alt="" />
+      <%})%>
+    </section>
+  </body>
+</html>
