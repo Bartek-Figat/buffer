@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const path = require("path");
+const sharp = require("sharp");
 const { dbConnection } = require("./db");
 const { upload } = require("./multer");
 const { Img } = require("./models/index");
@@ -19,12 +20,9 @@ server.use(morgan("tiny"));
 server.get("/", async (req, res) => {
   try {
     const files = await Img.find();
-    const images = files.map((item) => {
-      let buff = Buffer.from(item.images);
-      return JSON.parse(buff.toString()).path;
-    });
+    console.log(files);
 
-    res.render("index", { files, images });
+    res.render("index", { files });
   } catch (error) {
     console.log(error);
   }
@@ -32,17 +30,16 @@ server.get("/", async (req, res) => {
 
 server.post("/", upload.any("images"), async (req, res) => {
   try {
-    const imgFile = req.files[0];
+    const imgFile = req.files[0].path;
     const { text, ingridient, prescribe } = req.body;
 
-    const imageToString = JSON.stringify(imgFile);
-    let buff = Buffer.from(imageToString);
+    const data = await sharp(imgFile).toFormat("jpeg").toBuffer();
 
     const newPost = {
       text,
       ingridient,
       prescribe,
-      images: buff,
+      images: { data },
     };
     await Img.create(newPost);
 

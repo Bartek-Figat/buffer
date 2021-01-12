@@ -25,19 +25,22 @@
         <button>Send</button>
       </form>
     </main>
-    <section>
-      <% files.forEach(function(file){ %>
-      <h1><%= file.text %></h1>
-      <p><%= file.ingridient %></p>
-      <p><%= file.prescribe %></p>
-      <!-- <img src="<%= file.images %>" alt="" /> -->
-      <%})%>
-    </section>
+    <section></section>
 
-    <section>
-      <% images.forEach(function(file){ %>
-      <img src="<%= file %>" alt="" />
-      <%})%>
-    </section>
+    <% files.forEach(function(file) { %>
+    <div>
+      <div>
+        <h1><%= file.text %></h1>
+        <p><%= file.ingridient %></p>
+        <p><%= file.prescribe %></p>
+      </div>
+
+      <img
+        src="data:image/<%=file.images.contentType%>;base64,
+      <%=file.images.data.toString('base64')%>"
+        alt="photo"
+      />
+    </div>
+    <% }) %>
   </body>
 </html>

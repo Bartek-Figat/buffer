@@ -3,7 +3,10 @@ const { Schema, model } = require("mongoose");
 // Create Schema
 
 const imgSchema = new Schema({
-  images: Buffer,
+  images: {
+    data: Buffer,
+    contentType: String,
+  },
 
   text: String,
 
